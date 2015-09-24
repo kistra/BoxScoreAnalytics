@@ -113,7 +113,8 @@ public class DataLoader {
 
     private static void loadTeamTotals(List<Player> awayPlayers, Node awayTeamTotals) {
 
-        double teamMinutes = awayPlayers.stream().mapToDouble(Player::getMinutes).sum();
+        long teamMinutesInt = Math.round(awayPlayers.stream().mapToDouble(Player::getMinutes).sum() / 5);
+        final double teamMinutes = teamMinutesInt * 5;
 
         awayPlayers.forEach(player -> {
             PlayerMapper.mapTeamTotalsToPlayer(player, awayTeamTotals);
