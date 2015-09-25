@@ -6,4 +6,4 @@
 **/*.iml
 /.settings
 /.project
-**/BoxScoreAnalysis.iml
+**/resources/config.properties

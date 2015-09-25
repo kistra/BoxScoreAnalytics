@@ -2,6 +2,8 @@ package susilovic.matej.bsa;
 
 import java.sql.*;
 
+import static susilovic.matej.bsa.PropertyLoader.getProperty;
+
 public class Database {
 
     public static Database db;
@@ -10,10 +12,10 @@ public class Database {
 
     private Database() {
 
-        String url = "jdbc:postgresql://localhost:5432/";
-        String dbName = "msr";
-        String username = "msr";
-        String password = "";
+        String url = getProperty("dburl");
+        String dbName = getProperty("dbname");
+        String username = getProperty("dbusername");
+        String password = getProperty("dbpassword");
 
         try {
             Class.forName("org.postgresql.Driver");
