@@ -16,6 +16,10 @@ import java.util.regex.Pattern;
 
 public class Main {
 
+    private static final String ESPN_SCOREBOARD_URL = "http://espn.go.com/nba/scoreboard/_/date/";
+    private static final String SCRIPT_GAME_URL_REGEX_PATTERN = "http://espn\\.go\\.com/nba/boxscore\\?gameId=\\d\\d\\d\\d\\d\\d\\d\\d\\d";
+    private static final String ESPN_SCRIPT_GAME_URL = "http://espn.go.com/nba/boxscore?gameId=";
+
     private static Database db = Database.getDatabase();
 
     public static void main(String[] args) throws IOException {
@@ -30,12 +34,12 @@ public class Main {
     private static List<Player> loadGamesBetween(LocalDateTime startDate, LocalDateTime endDate) throws IOException {
 
         LocalDateTime start = startDate;
-        List<String> gameIds = null;
+        List<String> gameIds = new ArrayList<String>();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         while (!start.isAfter(endDate)) {
             String date = startDate.format(formatter);
-            gameIds = getGameIdsFor(date);
+            gameIds.addAll(getGameIdsFor(date));
             start = start.plusDays(1L);
         }
 
@@ -59,21 +63,19 @@ public class Main {
 
     private static List<String> getGameIdsFor(String date) throws IOException {
 
-        Document website = Jsoup.connect("http://espn.go.com/nba/scoreboard/_/date/" + date).get();
+        Document website = Jsoup.connect(ESPN_SCOREBOARD_URL + date).get();
 
         String script = ((DataNode) website.select("script").get(7).childNode(0)).getWholeData();
 
         List<String> allMatches = new ArrayList<String>();
-        Matcher matcher = Pattern.compile("http://espn\\.go\\.com/nba/boxscore\\?gameId=\\d\\d\\d\\d\\d\\d\\d\\d\\d")
+        Matcher matcher = Pattern.compile(SCRIPT_GAME_URL_REGEX_PATTERN)
                            .matcher(script);
         while (matcher.find()) {
-            allMatches.add(matcher.group().replace("http://espn.go.com/nba/boxscore?gameId=", ""));
+            allMatches.add(matcher.group().replace(ESPN_SCRIPT_GAME_URL, ""));
         }
 
         return allMatches;
     }
-
-
 
     private static void insertDataToDatabase(List<Player> players) {
 
