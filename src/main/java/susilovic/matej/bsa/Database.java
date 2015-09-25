@@ -13,7 +13,7 @@ public class Database {
         String url = "jdbc:postgresql://localhost:5432/";
         String dbName = "msr";
         String username = "msr";
-        String password = "7ncvji";
+        String password = "";
 
         try {
             Class.forName("org.postgresql.Driver");
