@@ -33,27 +33,16 @@ public class Main {
 
     private static List<Player> loadGamesBetween(LocalDateTime startDate, LocalDateTime endDate) throws IOException {
 
-        LocalDateTime start = startDate;
-        List<String> gameIds = new ArrayList<String>();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        while (!start.isAfter(endDate)) {
-            String date = startDate.format(formatter);
-            gameIds.addAll(getGameIdsFor(date));
-            start = start.plusDays(1L);
-        }
+        List<String> gameIds = getGameIdsForPeriodBetween(startDate, endDate);
 
         List<Player> playerData = new ArrayList<Player>();
 
         for (String gameId : gameIds) {
             List<Player> players = DataLoader.loadDataForGame("http://espn.go.com/nba/boxscore?id=" + gameId);
-
-            players.forEach(StatsCalculator::mapStatsTo);
-
+            players.forEach(StatsCalculator::mapAdvancedStatsTo);
             players.forEach(player -> {
                 System.out.println(player.getName() + ", " + Math.round(player.getOffensiveRating()));
             });
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
             playerData.addAll(players);
         }
@@ -61,10 +50,23 @@ public class Main {
         return playerData;
     }
 
-    private static List<String> getGameIdsFor(String date) throws IOException {
+    private static List<String> getGameIdsForPeriodBetween(LocalDateTime startDate, LocalDateTime endDate) throws IOException {
+
+        LocalDateTime start = startDate;
+        List<String> gameIds = new ArrayList<String>();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        while (!start.isAfter(endDate)) {
+            String date = startDate.format(formatter);
+            gameIds.addAll(getGameIdsForDate(date));
+            start = start.plusDays(1L);
+        }
+        return gameIds;
+    }
+
+    private static List<String> getGameIdsForDate(String date) throws IOException {
 
         Document website = Jsoup.connect(ESPN_SCOREBOARD_URL + date).get();
-
         String script = ((DataNode) website.select("script").get(7).childNode(0)).getWholeData();
 
         List<String> allMatches = new ArrayList<String>();

@@ -7,7 +7,7 @@ public class StatsCalculator {
 
     private static double SHOOTER_ASSISTANT_CREDIT_RATIO = 0.5;
 
-    public static void mapStatsTo(Player player) {
+    public static void mapAdvancedStatsTo(Player player) {
 
         if(!player.hasPlayed()) {
             return;
@@ -107,9 +107,11 @@ public class StatsCalculator {
     private static double getTeamOffRebWeight(Player player) {
 
         double teamOffRebPercentage = getTeamOffRebPercentage(player);
-        double teamPlayPerc = getTeamPlayPercentage(player);
+        double teamPlayPercentage = getTeamPlayPercentage(player);
 
-        return ((1 - teamOffRebPercentage) * teamPlayPerc) / ((1 - teamOffRebPercentage) * teamPlayPerc + teamOffRebPercentage * (1 - teamPlayPerc));
+        return ((1 - teamOffRebPercentage) * teamPlayPercentage)
+                /
+                ((1 - teamOffRebPercentage) * teamPlayPercentage + teamOffRebPercentage * (1 - teamPlayPercentage));
     }
 
     /* explain team play percentage and its usage */
