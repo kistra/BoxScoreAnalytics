@@ -1,4 +1,4 @@
-package susilovic.matej.bsa;
+package susilovic.matej.bsa.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,10 +29,5 @@ public class PropertyLoader {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-
-        System.out.println(getProperty("dburl"));
     }
 }

@@ -1,9 +1,11 @@
-package susilovic.matej.bsa;
+package susilovic.matej.bsa.webParser;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
+import susilovic.matej.bsa.mapper.PlayerMapper;
+import susilovic.matej.bsa.model.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;

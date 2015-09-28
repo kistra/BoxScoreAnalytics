@@ -1,8 +1,8 @@
-package susilovic.matej.bsa;
+package susilovic.matej.bsa.db;
 
 import java.sql.*;
 
-import static susilovic.matej.bsa.PropertyLoader.getProperty;
+import static susilovic.matej.bsa.util.PropertyLoader.getProperty;
 
 public class Database {
 

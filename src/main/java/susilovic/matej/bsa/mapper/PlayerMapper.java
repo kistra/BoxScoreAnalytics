@@ -1,7 +1,8 @@
-package susilovic.matej.bsa;
+package susilovic.matej.bsa.mapper;
 
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
+import susilovic.matej.bsa.model.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

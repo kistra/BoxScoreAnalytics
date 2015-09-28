@@ -1,4 +1,4 @@
-package susilovic.matej.bsa;
+package susilovic.matej.bsa.model;
 
 public class Player {
 

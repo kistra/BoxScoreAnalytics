@@ -1,5 +1,7 @@
 package susilovic.matej.bsa;
 
+import susilovic.matej.bsa.model.Player;
+
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
