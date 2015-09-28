@@ -30,7 +30,8 @@ public class Main {
         LocalDateTime endDate = LocalDateTime.of(2015, 2, 11, 0, 0);
 
         List<Player> players = loadGamesBetween(startDate, endDate);
-        BoxScoreRepository.insertPlayers(players);
+        //TODO refactor to call this method with gameDate parameter
+        BoxScoreRepository.insertPlayers(players, startDate);
     }
 
     private static List<Player> loadGamesBetween(LocalDateTime startDate, LocalDateTime endDate) throws IOException {
