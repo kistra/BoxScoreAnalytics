@@ -20,7 +20,7 @@ public class DataLoader {
 
     public static List<Player> loadDataForGame(String gameUrl) throws IOException {
 
-        website = Jsoup.connect(gameUrl).get();
+        website = Jsoup.connect(gameUrl).timeout(0).get();
 
         String awayTeam = getNameFor(AWAY_TEAM);
         String homeTeam = getNameFor(HOME_TEAM);
